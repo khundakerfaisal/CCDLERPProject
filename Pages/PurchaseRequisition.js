@@ -1,12 +1,12 @@
 class PurchaseRequisition{
     constructor(page){
         this.page=page;
-        this.rootMenu=page.getByRole("button",{name:"Home Menu"})
-        this.purchaseMenu=page.getByRole("menuitem",{name:"Purchase"})
+        this.rootMenu=page.getByRole('button', { name: '' })
+        this.purchaseMenu=page.getByRole('menuitem', { name: 'Purchase' }).first()
     }
     async CCLPurchaseRequisition(){
-        this.rootMenu.click();
-        this.purchaseMenu.click();
+        await this.rootMenu.click();
+        await this.purchaseMenu.click();
     }
 }
 export default PurchaseRequisition;
