@@ -1,5 +1,18 @@
 import { test, expect } from '@playwright/test';
+import LoginPage from '../Pages/LoginPage';
+import PurchaseRequisition from '../Pages/PurchaseRequisition';
 
-test('test', async ({ page }) => {
-  await page.goto('http://192.168.3.222:8069/web/login');
+test.describe('Purchase Requisittion',() => {
+ test.beforeEach(async({page})=>{
+    const loginPage=new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.CCLLogin("Admin","admin");
+
+ })
+
+ test("Create Purchase Requisition",async({page})=>{
+    const purchaseRequisition=new PurchaseRequisition(page);
+    purchaseRequisition.CCLPurchaseRequisition();
+ })
 });
+// npx playwright test tests/purchaseRequisition.spec.js --debug
