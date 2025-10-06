@@ -15,7 +15,7 @@ class PurchaseRequisition {
         await this.defaultRootMenu.click();
         await this.purchaseMenu.click();
         await this.orderRootMenu.click();
-       
+        await this.purchaseRequestSubMenu.click();
     }
 }
 
