@@ -12,7 +12,7 @@ test.describe('Purchase Requisittion',() => {
 
  test("Create Purchase Requisition",async({page})=>{
     const purchaseRequisition=new PurchaseRequisition(page);
-    purchaseRequisition.CCLPurchaseRequisition();
+    await purchaseRequisition.CCLPurchaseRequisition();
  })
 });
 // npx playwright test tests/purchaseRequisition.spec.js --debug
