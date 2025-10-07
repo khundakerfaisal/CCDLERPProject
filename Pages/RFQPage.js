@@ -13,7 +13,8 @@ class RFQPage {
         this.confirmRfq = page.getByRole('button', { name: 'Confirm' })
         this.createQuotation = page.getByRole('button', { name: ' Create Quotation' })
         this.selectPartner = page.getByRole('combobox', { name: 'Partner' })
-        this.priceInputs = page.locator('td[name="price_unit"] input.o_input');
+        this.createQuotationButton = page.getByRole('button', { name: 'Create Quotation' });
+
     }
     async CCLRfq() {
         await this.defaultRootMenu.click();
@@ -37,14 +38,32 @@ class RFQPage {
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('Enter');
+        // Wait for modal to appear
+        const modal = this.page.locator('div.modal-content');
+        await modal.waitFor({ state: 'visible' });
 
-        const priceInputs = this.page.locator('td[name="price_unit"] input.o_input');
-        await priceInputs.first().waitFor({ state: 'visible' });
+        // Locate all price_unit cells inside modal table
+        const priceCells = modal.locator('td[name="price_unit"] div.o_field_widget');
 
-        const count = await priceInputs.count();
+
+        // console.log(`Found ${count} price cells`);
+        const count = await priceCells.count();
         for (let i = 0; i < count; i++) {
-            await priceInputs.nth(i).fill(`${(i + 1) * 100}`);
+            const cell = priceCells.nth(i);
+            await cell.click(); // Focus the cell
+
+            // Select all text and type new value
+            await cell.press('Control+A');
+            await cell.type(`${(i + 1) * 100}`);
+            await this.page.pause();
         }
+
+        await this.page.waitForTimeout(500);
+
+        // Click the visible "Create Quotation" button after all prices are filled
+        const createQuotationButton = modal.locator('button[name="action_create_quotations"]:visible');
+        await createQuotationButton.waitFor({ state: 'visible', timeout: 10000 });
+        await createQuotationButton.click();
 
         await this.page.pause();
     }
