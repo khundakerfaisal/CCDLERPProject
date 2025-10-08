@@ -42,10 +42,14 @@ class PurchaseRequisition {
         // await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter');
 
+        // await this.selectBudget.click();
         await this.selectBudget.click();
-        // const budgetOption = this.page.locator('role=option').first();
-        await this.selectBudget.waitFor({ state: 'visible', timeout: 3000 });
-        await this.page.keyboard.press('ArrowDown'); 
+        // const budgetOptions = this.page.locator('.o-autocomplete--dropdown-item');
+        // await budgetOptions.first().waitFor({ state: 'visible', timeout: 10000 });
+
+        const firstBudgetOption = this.page.locator('.o-autocomplete--dropdown-item').first();
+        await firstBudgetOption.waitFor({ state: 'visible', timeout: 5000 });
+        await firstBudgetOption.click();
         await this.page.keyboard.press('Enter');
 
         // Now press Enter to select the first budget
@@ -69,7 +73,7 @@ class PurchaseRequisition {
         await this.prSubmit.click();
         await this.prHoDApprove.click();
         await this.prGMApprove.click();
-        await this.page.pause();
+        // await this.page.pause();
     }
 }
 
