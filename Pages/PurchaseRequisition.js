@@ -16,14 +16,15 @@ class PurchaseRequisition {
         this.selectRequestType = page.getByRole('combobox', { name: 'Requisition Type' })
         this.selectPRType = page.getByRole('combobox', { name: 'PR Type' })
         this.selectAddLine = page.getByRole('button', { name: 'Add a line' })
-   
-        this.selectProductLine = page.getByRole('row', { name: 'Sub Parent budget - Budget' }).getByRole('combobox').first()
-             this.prProducts = page.getByRole('option', { name: '1-Gang Switch' })
-             this.prQty = page.getByRole('textbox').nth(3)
-             this.prSave = page.getByRole('button', { name: 'Save manually' })
-             this.prSubmit = page.getByRole('button', { name: 'Submit' })
-             this.prHoDApprove = page.getByRole('button', { name: 'Approve' })
-             this.prGMApprove=page.getByRole('button', { name: 'Approve' })
+
+        // this.selectProductLine = page.getByRole('row', { name: 'Sub Parent budget - Budget' }).getByRole('combobox').first()
+        this.selectProductLine = page.locator('.o_data_cell').first()
+        this.prProducts = page.getByRole('option', { name: '1-Gang Switch' })
+        this.prQty = page.getByRole('textbox').nth(3)
+        this.prSave = page.getByRole('button', { name: 'Save manually' })
+        this.prSubmit = page.getByRole('button', { name: 'Submit' })
+        this.prHoDApprove = page.getByRole('button', { name: 'Approve' })
+        this.prGMApprove = page.getByRole('button', { name: 'Approve' })
     }
 
     async CCLPurchaseRequisition() {
@@ -42,8 +43,14 @@ class PurchaseRequisition {
         await this.page.keyboard.press('Enter');
 
         await this.selectBudget.click();
-        // await this.page.keyboard.press('ArrowDown');
+        // const budgetOption = this.page.locator('role=option').first();
+        await this.selectBudget.waitFor({ state: 'visible', timeout: 3000 });
+        await this.page.keyboard.press('ArrowDown'); 
         await this.page.keyboard.press('Enter');
+
+        // Now press Enter to select the first budget
+        // 
+
 
         await this.selectRequestType.click();
         await this.page.keyboard.press('ArrowDown');   // navigate to "High"
