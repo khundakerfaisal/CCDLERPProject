@@ -20,8 +20,8 @@ class PurchaseRequisition {
 
         // this.selectProductLine = page.getByRole('row', { name: 'Sub Parent budget - Budget' }).getByRole('combobox').first()
         this.selectProductLine = page.locator('.o_data_cell').first()
-        this.prProducts = page.getByRole('option', { name: 'CEMENT A' })
-        this.prQty = page.getByRole('textbox').nth(3)
+        this.prProducts = page.getByRole('link', { name: 'Chef Cap' })
+        this.prQty = page.locator('td[name="product_qty"] input.o_input');
         this.prSave = page.getByRole('button', { name: 'Save manually' })
         this.prSubmit = page.getByRole('button', { name: 'Submit' })
         this.prHoDApprove = page.getByRole('button', { name: 'Approve' })
