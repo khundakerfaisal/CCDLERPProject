@@ -11,8 +11,9 @@ class PurchaseRequisition {
         this.purchaseRequestSubMenu = page.getByRole('menuitem', { name: 'Purchase Requisition' })
         this.createNewPR = page.getByRole('button', { name: 'New' })
         this.selectPriority = page.getByLabel('Priority')
-        this.selectDepartment = page.getByRole('combobox', { name: 'Department' })
-        this.selectBudget = page.getByRole('combobox', { name: 'Budget' })
+        this.selectDepartment = page.getByRole('textbox', { name: 'Department' })
+        // this.selectDepartment = page.locator('div:nth-child(4) > .o_cell.o_wrap_input').first()
+        this.selectBudget = page.getByRole('textbox', { name: 'Budget' })
         this.selectRequestType = page.getByRole('combobox', { name: 'Requisition Type' })
         this.selectPRType = page.getByRole('combobox', { name: 'PR Type' })
         this.selectAddLine = page.getByRole('button', { name: 'Add a line' })
@@ -44,13 +45,11 @@ class PurchaseRequisition {
 
         // await this.selectBudget.click();
         await this.selectBudget.click();
-        // const budgetOptions = this.page.locator('.o-autocomplete--dropdown-item');
-        // await budgetOptions.first().waitFor({ state: 'visible', timeout: 10000 });
 
-        const firstBudgetOption = this.page.locator('.o-autocomplete--dropdown-item').first();
+        const firstBudgetOption = this.page.locator('.o-autocomplete--dropdown-item').first()
         await firstBudgetOption.waitFor({ state: 'visible', timeout: 5000 });
         await firstBudgetOption.click();
-        await this.page.keyboard.press('Enter');
+        // await this.page.keyboard.press('Enter');
 
         // Now press Enter to select the first budget
         // 

@@ -9,7 +9,7 @@ class LoginPage {
 
     }
     async goto() {
-        await this.page.goto("http://192.168.3.222:8069/web/login");
+        await this.page.goto("http://192.168.3.187:7071/web/login");
     }
     async CCLLogin(username, password) {
         await this.userNameInput.fill(username);

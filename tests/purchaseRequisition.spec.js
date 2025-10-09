@@ -6,7 +6,7 @@ test.describe('Purchase Requisittion',() => {
  test.beforeEach(async({page})=>{
     const loginPage=new LoginPage(page);
     await loginPage.goto();
-    await loginPage.CCLLogin("Admin","admin");
+    await loginPage.CCLLogin("Admin","1234");
 
  })
 

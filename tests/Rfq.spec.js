@@ -6,7 +6,7 @@ test.describe("Create Rfq", () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.goto();
-        await loginPage.CCLLogin("Admin", "admin");
+        await loginPage.CCLLogin("Admin", "1234");
     })
     test("Create New RFQ", async ({ page }) => {
         const rfqPage = new RFQPage(page);
