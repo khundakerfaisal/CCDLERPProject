@@ -12,15 +12,15 @@ class PurchaseRequisition {
         this.createNewPR = page.getByRole('button', { name: 'New' })
         this.selectPriority = page.getByLabel('Priority')
         this.selectDepartment = page.getByRole('textbox', { name: 'Department' })
-        // this.selectDepartment = page.locator('div:nth-child(4) > .o_cell.o_wrap_input').first()
         this.selectBudget = page.getByRole('textbox', { name: 'Budget' })
+        this.selectBudgetChoose = page.locator('.o-autocomplete--dropdown-item').first()
         this.selectRequestType = page.getByRole('combobox', { name: 'Requisition Type' })
         this.selectPRType = page.getByRole('combobox', { name: 'PR Type' })
         this.selectAddLine = page.getByRole('button', { name: 'Add a line' })
 
         // this.selectProductLine = page.getByRole('row', { name: 'Sub Parent budget - Budget' }).getByRole('combobox').first()
         this.selectProductLine = page.locator('.o_data_cell').first()
-        this.prProducts = page.getByRole('option', { name: '1-Gang Switch' })
+        this.prProducts = page.getByRole('option', { name: 'CEMENT A' })
         this.prQty = page.getByRole('textbox').nth(3)
         this.prSave = page.getByRole('button', { name: 'Save manually' })
         this.prSubmit = page.getByRole('button', { name: 'Submit' })
@@ -43,22 +43,15 @@ class PurchaseRequisition {
         // await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter');
 
-        // await this.selectBudget.click();
+
         await this.selectBudget.click();
-
-        const firstBudgetOption = this.page.locator('.o-autocomplete--dropdown-item').first()
-        await firstBudgetOption.waitFor({ state: 'visible', timeout: 5000 });
-        await firstBudgetOption.click();
-        // await this.page.keyboard.press('Enter');
-
-        // Now press Enter to select the first budget
-        // 
-
+        await this.page.waitForSelector('.o-autocomplete--dropdown-item', { state: 'visible' });
+        await this.selectBudgetChoose.click();
+        await this.page.keyboard.press('Enter');
 
         await this.selectRequestType.click();
         await this.page.keyboard.press('ArrowDown');   // navigate to "High"
         await this.page.keyboard.press('Enter');
-
 
         await this.selectPRType.click();
         await this.page.keyboard.press('ArrowDown');   // navigate to "High"
