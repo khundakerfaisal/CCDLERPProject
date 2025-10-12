@@ -68,9 +68,9 @@ class RFQPage {
         // Click the visible "Create Quotation" button after all prices are filled
         const createQuotationButton = modal.locator('button[name="action_create_quotations"]:visible');
         await createQuotationButton.waitFor({ state: 'visible', timeout: 10000 });
+        await this.page.waitForTimeout(1000);
         await createQuotationButton.click();
-        
-        
+        await this.page.waitForTimeout(1000); 
         // await this.page.pause();
     }
 }
