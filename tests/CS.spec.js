@@ -13,3 +13,5 @@ test.describe("Create CS", () => {
         await csPage.CCLCSPage();
     })
 })
+
+//npx playwright test tests/CS.spec.js
