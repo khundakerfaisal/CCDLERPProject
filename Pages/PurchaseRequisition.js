@@ -81,6 +81,7 @@ class PurchaseRequisition {
         await this.selectProductLine.click();
         // await this.page.waitForTimeout(1000);
         await this.page.waitForSelector('.o-autocomplete--dropdown-item', { state: 'visible', timeout: 10000  });
+         await this.page.waitForTimeout(1000);
         await this.prProducts.first().click();
         await this.page.waitForTimeout(1000); // Wait for product selection to complete
         // Fill quantity and save

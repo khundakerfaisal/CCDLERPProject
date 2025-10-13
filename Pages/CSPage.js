@@ -37,7 +37,7 @@ class CSPage {
         await this.page.waitForTimeout(3000);
         await this.ApprovedButton.click();
         await this.page.waitForTimeout(3000);
-        await this.page.pause();
+        // await this.page.pause();
 
     }
 }

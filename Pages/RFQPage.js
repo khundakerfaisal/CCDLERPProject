@@ -33,47 +33,45 @@ class RFQPage {
         await this.page.waitForTimeout(1000);
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('Enter');
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(1000);
+        await this.selectPartner.click();
+        await this.page.waitForTimeout(500);
+        await this.page.keyboard.press('ArrowDown')
+        await this.page.keyboard.press('ArrowDown')
+        await this.page.keyboard.press('Enter');
+        await this.page.waitForTimeout(1000);
+        await this.selectPartner.click();
+        await this.page.waitForTimeout(500);
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('ArrowDown')
         await this.page.keyboard.press('Enter');
-        await this.page.waitForTimeout(4000);
-        await this.page.keyboard.press('ArrowDown')
-        await this.page.keyboard.press('ArrowDown')
-        await this.page.keyboard.press('ArrowDown')
-        await this.page.keyboard.press('Enter');
-        await this.page.waitForTimeout(3000);
+        await this.page.waitForTimeout(500);
         // Wait for modal to appear
         const modal = this.page.locator('div.modal-content');
-         await this.page.waitForTimeout(1000);
         await modal.waitFor({ state: 'visible' });
-         await this.page.waitForTimeout(1000);
-
         // Locate all price_unit cells inside modal table
         const priceCells = modal.locator('td[name="price_unit"] div.o_field_widget');
-
-
         // console.log(`Found ${count} price cells`);
         const count = await priceCells.count();
-        
+
         for (let i = 0; i < count; i++) {
             const cell = priceCells.nth(i);
             await cell.click(); // Focus the cell
-
             // Select all text and type new value
             await cell.press('Control+A');
             await cell.type(`${(i + 1) * 100}`);
+            await this.page.waitForTimeout(500);
         }
-        
-        await this.page.waitForTimeout(2000);
-        
+
+        await this.page.waitForTimeout(1000);
+
         // Click the visible "Create Quotation" button after all prices are filled
         const createQuotationButton = modal.locator('button[name="action_create_quotations"]:visible');
         await createQuotationButton.waitFor({ state: 'visible', timeout: 10000 });
         await this.page.waitForTimeout(1000);
         await createQuotationButton.click();
-        await this.page.waitForTimeout(1000); 
+        await this.page.waitForTimeout(1000);
         // await this.page.pause();
     }
 }
