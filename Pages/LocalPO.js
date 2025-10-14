@@ -5,7 +5,9 @@ class LocalPoPage {
         this.purchaseMenu = page.getByRole('menuitem', { name: 'Purchase' });
         this.orderRootMenu = page.getByRole('button', { name: 'Orders' })
         this.localPoSubMenu = page.getByRole('menuitem', { name: 'Local Purchase' })
-        this.localPoFirstItem = page.locator('.o_data_row').first()
+        // this.localPoFirstItem = page.locator('.o_data_row').first()
+         this.createNewLocalPo = page.getByRole('button', { name: 'New' })
+         this.selectPurchaseBase = page.getByRole('combobox', { name: 'Purchase Base' })
         // this.createButton = page.getByRole('button', { name: 'Compare' })
         // this.editButton = page.getByRole('button', { name: 'Edit' })
         // this.awardedQty = page.locator('.o_purchase_selected_qty').first()
@@ -19,8 +21,14 @@ class LocalPoPage {
         await this.purchaseMenu.click();
         await this.orderRootMenu.click();
         await this.localPoSubMenu.click();
-        await this.localPoFirstItem.click();
+        await this.createNewLocalPo.click();
         await this.page.waitForTimeout(1000);
+                await this.selectPurchaseBase.click();
+                   await this.page.keyboard.press('ArrowDown');
+
+        await this.page.keyboard.press('Enter'); 
+                        await this.page.waitForTimeout(1000);
+
         // await this.createButton.click();
         // await this.page.waitForTimeout(1000);
         // await this.editButton.click();
