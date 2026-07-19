@@ -8,7 +8,9 @@ test.describe("Local PO Flow", () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.goto();
-        await loginPage.CCLLogin("Admin", "1234")
+        // await loginPage.CCLLogin("Admin", "1234")
+        await loginPage.CCLLogin("devops", "@Dev2025");
+
     })
     test("Create Purchase Requisition", async ({ page }) => {
         const purchaseRequisition = new PurchaseRequisition(page);
