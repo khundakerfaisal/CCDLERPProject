@@ -1,0 +1,5 @@
+{
+  "PilotloginUrl": "http://192.168.3.222:8069/web/login",
+  "TestloginUrl": "http://192.168.3.187:7071/web/login",
+  "_comment_url": "The URL use only for pilot servers."
+}
