@@ -29,6 +29,9 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     viewport: null,
+    video:"on",
+    screenshot: "only-on-failure",
+    ignoreHTTPSErrors: true,
     launchOptions: {
       args: ['--start-maximized'], // Chrome/Edge full window
       headless: false
