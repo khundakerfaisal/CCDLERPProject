@@ -53,6 +53,7 @@ class FleetPage {
 
     async createFleet() {
 
+
         await this.homeMenu.click();
 
         await this.fleetMenu.click();
