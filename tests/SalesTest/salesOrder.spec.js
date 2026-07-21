@@ -19,7 +19,7 @@ test.describe("User Login With Valid creds", () => {
     });
 
 
-    for (let i = 1; i <= 1; i++) {
+    for (let i = 1; i <= 3; i++) {
 
         test(`Create New SO - ${i}`, async ({ page }) => {
 
@@ -33,4 +33,4 @@ test.describe("User Login With Valid creds", () => {
 
 });
 
-//npx playwright test tests/salesOrder.spec.js --workers=3
+//npx playwright test tests/salesTest/salesOrder.spec.js --workers=3

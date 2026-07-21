@@ -33,4 +33,4 @@ test.describe("User Login With Valid creds", () => {
 
 });
 
-//npx playwright test tests/DeliveryAdvice.spec.js --workers=3
+//npx playwright test tests/SalesTest/DeliveryAdvice.spec.js --workers=3

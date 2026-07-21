@@ -166,11 +166,16 @@ class salesOrderInputPage {
 
         // Sub District
 
-        await this.subDistrict.fill(
+        await this.selectAutocomplete(
+            this.subDistrict,
             "Narsingdi Sadar"
         );
 
-        await this.subDistrict.press("Enter");
+        // await this.subDistrict.fill(
+        //     "Narsingdi Sadar"
+        // );
+
+        // await this.subDistrict.press("Enter");
 
 
 

@@ -22,17 +22,15 @@ class DeliveryAdvicePage {
         this.executive = page.getByRole('combobox', { name: 'Sales Executive' });
 
         // DO Line
-        this.addLine = page.locator("text=Add a line");
+        this.addLine = page.getByText("Add a line", { exact: true });
         this.doLine = page.locator("[name='do_line_id']");
         this.doInput = page.locator("//td[@name='do_line_id']//input");
 
         // Site buttons
         this.addSiteButtons = page.locator("button[name='action_open_retailer_popup']");
-        // this.requestToApproveButton = page.getByRole('button', { name: 'Request To Approve' });
-        // this.ApproveButton = page.getByRole('button', { name: 'Approve' });
-
-
     }
+
+
     async selectAutocomplete(field, value) {
 
         await field.waitFor({ state: "visible" });
@@ -52,8 +50,49 @@ class DeliveryAdvicePage {
         });
 
         await option.click();
-
     }
+
+
+    // ==============================
+    // DO Line Selection Fix
+    // ==============================
+    async selectDeliveryOrder() {
+
+        // Add new DO line
+        await this.addLine.click();
+
+        // Always get the currently active DO input
+        const input = this.page
+            .locator("//td[@name='do_line_id']//input")
+            .last();
+
+        await input.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
+        await input.click();
+
+        await input.fill("DO");
+
+        // Wait for Odoo dropdown
+        const dropdownOption = this.page
+            .locator("ul.ui-autocomplete li")
+            .filter({ hasText: "DO" })
+            .first();
+
+        await dropdownOption.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
+        await dropdownOption.click();
+
+        // Wait until value is populated
+        await this.page.waitForTimeout(1000);
+    }
+
+
 
     async createDeliveryAdvice() {
 
@@ -67,104 +106,166 @@ class DeliveryAdvicePage {
 
 
 
-
         // Location
         await this.selectAutocomplete(
             this.location,
             "Main Store/Cement Plant Main Store"
         );
 
+
         // Delivery Address
         await this.deliveryAddress.fill("Chittagong");
 
+
         // Labour Office
-        await this.labourOffice.selectOption({ label: "Labor Office" });
+        await this.labourOffice.selectOption({
+            label: "Labor Office"
+        });
+
+
 
         // Customer
-        // Customer
-
         await this.selectAutocomplete(
             this.customer,
             "credit Test"
         );
 
+
+        // Sales Executive
         await this.selectAutocomplete(
             this.executive,
             "Md. Zahid Hasan"
         );
 
 
-        // Scroll
+
+        // Scroll to DO section
         await this.page.mouse.wheel(0, 1000);
 
-        // Add Line 1st
-        await this.addLine.click();
-        await this.doInput.click();
-        await this.doInput.fill("DO");
-        await this.doInput.press("Enter");
+
+
+        // ============================
+        // DO Line 1
+        // ============================
+        await this.selectDeliveryOrder();
 
 
 
-        // Add Line 2nd
-        await this.addLine.click();
-        await this.doInput.click();
-        await this.doInput.fill("DO");
-        await this.doInput.press("Enter");
+        // ============================
+        // DO Line 2
+        // ============================
+        await this.selectDeliveryOrder();
+
 
 
         // Save
-        await this.page.mouse.wheel(0, -1000);
-
         await this.saveButton.click();
 
-        // First Site
+
+
+        // Site Information
         await this.fillSiteInformation(0, false);
 
-        // Second Site
         await this.fillSiteInformation(1, true);
-        // await this.fillSiteInformation(2, true);
+
+
 
         // Approval
         await this.requestApproveButton.click();
+
 
         await this.approveButton.waitFor({
             state: "visible"
         });
 
+
         await this.approveButton.click();
     }
+
+
+
+    //Site information button click and select retailer from the list
 
     async fillSiteInformation(index, selectSecond) {
 
         const button = this.addSiteButtons.nth(index);
 
         await button.scrollIntoViewIfNeeded();
-
         await button.click();
 
         const modal = this.page.locator(".modal-content");
 
-        // await expect(modal).toBeVisible();
+        await modal.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
 
         const retailerCell = modal.locator("//td[@name='retailer_id']");
         await retailerCell.click();
 
-        const retailerInput = modal.locator("//td[@name='retailer_id']//input");
+        const retailerInput = modal.locator(
+            "//td[@name='retailer_id']//input"
+        );
+
+        await retailerInput.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
 
         await retailerInput.click();
 
+        // Give Odoo autocomplete time to initialize
+        await this.page.waitForTimeout(500);
+
+
         if (selectSecond) {
+            await retailerInput.fill("");
             await retailerInput.press("ArrowDown");
+        } else {
+            await retailerInput.fill("");
         }
 
-        await retailerInput.press("Enter");
 
-        const saveClose = modal.locator("button[name='action_confirm']");
+        // Wait for autocomplete list
+        const retailerOption = this.page
+            .locator(".o-autocomplete--dropdown-item")
+            .first();
+
+        await retailerOption.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
+
+        if (selectSecond) {
+            await this.page
+                .locator(".o-autocomplete--dropdown-item")
+                .nth(1)
+                .click();
+        } else {
+            await retailerOption.click();
+        }
+
+
+        const saveClose = modal.locator(
+            "button[name='action_confirm']"
+        );
+
+        await saveClose.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
 
         await saveClose.click();
 
-        // await expect(modal).toBeHidden();
+
+        await modal.waitFor({
+            state: "hidden",
+            timeout: 10000
+        });
     }
 }
+
 
 export default DeliveryAdvicePage;
