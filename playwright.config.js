@@ -22,14 +22,14 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: 3,
-  // workers: 1,
+  // workers: 3,
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     viewport: null,
-    video:"on",
+    video: "on",
     screenshot: "only-on-failure",
     ignoreHTTPSErrors: true,
     launchOptions: {
@@ -49,7 +49,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-    
+
       use: {
         // copy Desktop Chrome settings except viewport & deviceScaleFactor
         ...(() => {

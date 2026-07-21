@@ -69,8 +69,12 @@ class FleetPage {
 
 
         // Model
+        await this.page.waitForTimeout(500);
+
         await this.modelName.click();
+        await this.page.waitForTimeout(1500);
         await this.modelName.fill("Audi/A1");
+        await this.page.waitForTimeout(1000);
         await this.modelName.press("Enter");
 
 

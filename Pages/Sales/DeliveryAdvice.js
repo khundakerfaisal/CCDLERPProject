@@ -177,9 +177,10 @@ class DeliveryAdvicePage {
         await this.approveButton.waitFor({
             state: "visible"
         });
-
+        await this.page.waitForTimeout(500);
 
         await this.approveButton.click();
+        await this.page.waitForTimeout(1000);
     }
 
 
@@ -269,3 +270,4 @@ class DeliveryAdvicePage {
 
 
 export default DeliveryAdvicePage;
+

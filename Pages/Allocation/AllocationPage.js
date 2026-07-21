@@ -16,11 +16,18 @@ class AllocationPage {
 
         this.inputTripType = page.locator("#trip_type_id_0");
         this.inputTransportType = page.locator("#transport_type_0");
-        this.selectVehicle = page.locator("#vehicle_id_0");
 
-        this.inputCustomer = page.getByRole('combobox', { name: 'Partner' });
+        this.selectVehicle = page.getByRole('combobox', {
+            name: 'Vehicle'
+        });
 
-        this.inputDeliveryAdvice = page.getByRole('combobox', { name: 'Delivery Advise' });
+        this.inputCustomer = page.getByRole('combobox', {
+            name: 'Partner'
+        });
+
+        this.inputDeliveryAdvice = page.getByRole('combobox', {
+            name: 'Delivery Advise'
+        });
 
         this.saveButton = page.locator(
             "//button[@data-tooltip='Save manually']"
@@ -30,62 +37,119 @@ class AllocationPage {
 
         this.allocationNumber = page.locator("//div[@name='name']//span");
     }
+
+
     async selectAutocomplete(field, value) {
 
-        await field.waitFor({ state: "visible" });
+        await field.waitFor({
+            state: "visible"
+        });
 
         await field.click();
 
         await field.fill(value);
+
 
         const option = this.page
             .locator(".o-autocomplete--dropdown-item")
             .filter({ hasText: value })
             .first();
 
+
         await option.waitFor({
             state: "visible",
             timeout: 15000
         });
 
+
         await option.click();
 
     }
 
+
+    // Vehicle selection fix
+    async selectVehicleOption() {
+
+        await this.selectVehicle.waitFor({
+            state: "visible",
+            timeout: 10000
+        });
+
+
+        await this.selectVehicle.click();
+
+
+        // Trigger dropdown
+        await this.selectVehicle.fill("");
+
+
+        const vehicleOption = this.page
+            .locator(".o-autocomplete--dropdown-item")
+            .first();
+
+
+        await vehicleOption.waitFor({
+            state: "visible",
+            timeout: 15000
+        });
+
+
+        await vehicleOption.click();
+
+    }
+
+
+
     async allocationEntryPage() {
+
         await this.homeMenu.click();
 
         await this.allocationMenu.click();
 
         await this.vehicleAllocationMenu.click();
 
-        await this.createNewButton.nth(2).click();
+
+        await this.createNewButton
+            .nth(2)
+            .click();
+
+
 
         // Trip Type
         await this.inputTripType.fill("Sales");
         await this.inputTripType.press("Enter");
+
+
 
         // Transport Type
         await this.inputTransportType.selectOption({
             label: "CNF Cost",
         });
 
-        // Select customer
-
-        await this.inputCustomer.fill("credit Test");
-        await this.inputCustomer.press("Enter");
 
 
+        // Customer
+        await this.selectAutocomplete(
+            this.inputCustomer,
+            "credit Test"
+        );
 
-        await this.inputDeliveryAdvice.fill("DA");
-        await this.inputDeliveryAdvice.press("Enter");
 
-       
 
-        // Select vehicle again
-        await this.selectVehicle.press("ArrowDown");
-        await this.selectVehicle.press("Enter");
+        // Delivery Advice
+        await this.selectAutocomplete(
+            this.inputDeliveryAdvice,
+            "DA"
+        );
 
+
+
+        // Vehicle
+        await this.selectVehicleOption();
+
+
+
+        // Save
         await this.saveButton.click();
 
 
@@ -94,8 +158,14 @@ class AllocationPage {
             await this.allocationNumber.textContent()
         ).trim();
 
+
         await AllocationNumber.saveAllocationNumber(allocationNo);
+
+
         await this.submitButton.click();
+
     }
 }
+
+
 export default AllocationPage;

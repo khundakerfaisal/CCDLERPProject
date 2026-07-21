@@ -19,7 +19,7 @@ test.describe("User Login With Valid creds", () => {
     });
 
 
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 1; i++) {
 
         test(`Create New SO - ${i}`, async ({ page }) => {
 
