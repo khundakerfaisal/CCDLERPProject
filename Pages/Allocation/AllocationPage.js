@@ -143,6 +143,8 @@ class AllocationPage {
         );
 
 
+        await this.page.mouse.wheel(0, 500);
+        await this.selectVehicle.scrollIntoViewIfNeeded();
 
         // Vehicle
         await this.selectVehicleOption();
