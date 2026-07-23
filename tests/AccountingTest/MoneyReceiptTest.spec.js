@@ -19,7 +19,7 @@ test.describe("User Login With Valid creds", () => {
     });
 
 
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 5; i++) {
 
         test(`Create New Money Receipt - ${i}`, async ({ page }) => {
 
