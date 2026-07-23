@@ -20,6 +20,18 @@ export function generateRandomAmount(min = 1000, max = 10000) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+export function getAllocationNumber() {
+    const filePath = "./tests/resources/allocationNumber.json";
+
+
+    const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+    if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("allocationNumber.json is empty.");
+    }
+
+    return data.at(-1).AllocationNumber;
+}
 
 
 export class AllocationNumber {
@@ -31,6 +43,8 @@ export class AllocationNumber {
     static async scrollUp(page) {
         await page.evaluate(() => window.scrollBy(0, -1000));
     }
+
+
 
     static async getAllocationNumber() {
 
